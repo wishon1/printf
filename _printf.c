@@ -9,13 +9,16 @@ int _printf(const char *format, ...)
 {
 	int i, count;
 	char x;
-	int (*specifier_func)(va_list);
 	va_list arg;
 
 	va_start(arg, format);
 
 	count = 0;
 	i = 0;
+
+	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
+                return (-1);
+
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
@@ -29,21 +32,18 @@ int _printf(const char *format, ...)
 			}
 			else
 			{
-				specifier_func = selector(x);
-				if (specifier_func != NULL)
-				{
-					count += specifier_func(arg);
-				}
+				count += (*selector(x))(arg);
+				i++;
 			}
-			i++;
+
 		}
 		else
 		{
 			_putchar(format[i]);
 			count++;
 		}
+		i++;
 	}
-	i++;
 	va_end(arg);
 	return (count);
 }
