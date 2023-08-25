@@ -10,7 +10,7 @@ int _c_specifier(va_list arg)
 
 	c = va_arg(arg, int);
 
-i	_putchar(c);
+	_putchar(c);
 
 	return (1);
 }
